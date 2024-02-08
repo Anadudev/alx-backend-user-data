@@ -5,10 +5,10 @@ import logging
 import mysql.connector
 import os
 
-user = os.getenv("PERSONAL_DATA_DB_USERNAME")
-host = os.getenv("PERSONAL_DATA_DB_HOST")
-password = os.getenv("PERSONAL_DATA_DB_PASSWORD")
-database = os.getenv("PERSONAL_DATA_DB_NAME")
+user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+host = os.getenv("PERSONAL_DATA_DB_HOST", "")
+password = os.getenv("PERSONAL_DATA_DB_PASSWORD",  "localhost")
+database = os.getenv("PERSONAL_DATA_DB_NAME", )
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
