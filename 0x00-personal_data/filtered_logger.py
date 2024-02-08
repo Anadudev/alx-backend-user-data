@@ -2,6 +2,13 @@
 """ regexing """
 import re
 import logging
+import mysql.connector
+import os
+
+user = os.getenv("PERSONAL_DATA_DB_USERNAME")
+host = os.getenv("PERSONAL_DATA_DB_HOST")
+password = os.getenv("PERSONAL_DATA_DB_PASSWORD")
+database = os.getenv("PERSONAL_DATA_DB_NAME")
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -44,6 +51,15 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
+def get_db():
+    mydb = mysql.connector.connect(
+            host=host,
+            user=user,
+            password=password,
+            database=database
+            )
+            
+    return mydb
 
-
+    
 # if __name__=="__main__":
