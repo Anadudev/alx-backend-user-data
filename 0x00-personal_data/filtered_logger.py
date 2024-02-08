@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 """ regexing """
+import os
 import re
 import logging
+import bcrypt
 import mysql.connector
-import os
-
-user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
-host = os.getenv("PERSONAL_DATA_DB_HOST", "")
-password = os.getenv("PERSONAL_DATA_DB_PASSWORD",  "localhost")
-database = os.getenv("PERSONAL_DATA_DB_NAME", )
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
 
@@ -51,15 +47,69 @@ def get_logger() -> logging.Logger:
     handler.setFormatter(formatter)
     logger.addHandler(handler)
     return logger
-def get_db():
-    mydb = mysql.connector.connect(
-            host=host,
-            user=user,
-            password=password,
-            database=database
-            )
-            
-    return mydb
 
-    
-# if __name__=="__main__":
+
+def get_db() -> mysql.connector.connection.MySQLConnection:
+    """_summary_
+
+    Returns:
+        mysql.connector.connection.MySQLConnection: _description_
+    """
+    user = os.getenv("PERSONAL_DATA_DB_USERNAME", "root")
+    host = os.getenv("PERSONAL_DATA_DB_HOST", "")
+    password = os.getenv("PERSONAL_DATA_DB_PASSWORD", "localhost")
+    database = os.getenv(
+        "PERSONAL_DATA_DB_NAME",
+    )
+
+    my_db = mysql.connector.connect(
+        host=host, user=user, password=password, database=database
+    )
+
+    return my_db
+
+
+def main():
+    """_summary_"""
+    my_db = get_db()
+    logger = get_logger()
+    cursor = my_db.cursor()
+    cursor.execute("SELECT * FROM users;")
+    field_names = cursor.column_names
+    for row in cursor:
+        data_row = "".join(f"{f}={str(r)}; " for r, f in zip(row, field_names))
+        logger.info(data_row.strip())
+    cursor.close()
+    my_db.close()
+
+
+def hash_password(password: str):
+    """_summary_
+
+    Args:
+        password (str): _description_
+
+    Returns:
+        _type_: _description_
+    """
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode(), salt)
+
+
+def is_valid(hashed_password: bytes, password: str) -> bool:
+    """_summary_
+
+    Args:
+        hashed_password (bytes): _description_
+        password (str): _description_
+
+    Returns:
+        bool: _description_
+    """
+    if bcrypt.checkpw(password, hashed_password):
+        return True
+    return False
+
+
+if __name__ == "__main__":
+    main()
