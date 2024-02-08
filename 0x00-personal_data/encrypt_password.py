@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """ Encrypting passwords """
+import bcrypt
 
 
 def hash_password(password: str):
@@ -25,6 +26,6 @@ def is_valid(hashed_password: bytes, password: str) -> bool:
     Returns:
         bool: _description_
     """
-    if bcrypt.checkpw(password, hashed_password):
+    if bcrypt.checkpw(password.encode("utf-8"), hashed_password):
         return True
     return False

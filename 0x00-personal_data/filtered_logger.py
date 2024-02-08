@@ -3,7 +3,6 @@
 import os
 import re
 import logging
-import bcrypt
 import mysql.connector
 
 PII_FIELDS = ("name", "email", "phone", "ssn", "password")
