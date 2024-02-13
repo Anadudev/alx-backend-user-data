@@ -26,10 +26,10 @@ def handle_request():
     if not auth:
         return
     excluded = [
-            "/api/v1/status/",
-            "/api/v1/unauthorized/",
-            "/api/v1/forbidden/",
-            ]
+        "/api/v1/status/",
+        "/api/v1/unauthorized/",
+        "/api/v1/forbidden/",
+    ]
     if not auth.require_auth(request.path, excluded):
         return
     if auth.authorization_header(request) is None:
