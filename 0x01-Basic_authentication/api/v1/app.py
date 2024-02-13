@@ -26,7 +26,7 @@ def handle_request():
             "/api/v1/status/",
             "/api/v1/unauthorized/",
             "/api/v1/forbidden/",
-            ]
+        ]
         if auth.require_auth(request.path, excluded) is False:
             if auth.authorization_header(request) is None:
                 abort(401)
