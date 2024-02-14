@@ -14,6 +14,26 @@ def status() -> str:
     return jsonify({"status": "OK"})
 
 
+@app_views.route(
+    "/users/<int:user_id>", methods=["GET", "PUT", "DELETE"], strict_slashes=False
+)
+def users_id() -> str:
+    """GET /api/v1/users_id
+    Return:
+      - the user_id of the API
+    """
+    return jsonify({"status": "OK"})
+
+
+@app_views.route("/users", methods=["GET", "POST"], strict_slashes=False)
+def users() -> str:
+    """GET /api/v1/users
+    Return:
+      - the users of the API
+    """
+    return jsonify({"status": "OK"})
+
+
 @app_views.route("/stats/", strict_slashes=False)
 def stats() -> str:
     """GET /api/v1/stats
