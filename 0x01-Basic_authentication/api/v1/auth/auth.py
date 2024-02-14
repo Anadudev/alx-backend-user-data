@@ -16,18 +16,17 @@ class Auth:
         Returns:
             bool: _description_
         """
+
         pattern = r"/api/v1/status(/?)"
-        if path is None:
+        if not(path and excluded_paths):
             return True
+        if path in excluded_paths:
+            return False
         if re.match(pattern, path):
             for paths in excluded_paths:
                 if re.match(pattern, paths):
                     return False
-        if path not in excluded_paths:
-            return True
-        if not excluded_paths:
-            return True
-        return False
+        return True
 
     def authorization_header(self, request=None) -> str:
         """_summary_
