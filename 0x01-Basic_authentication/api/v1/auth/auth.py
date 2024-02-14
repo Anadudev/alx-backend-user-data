@@ -6,12 +6,14 @@ import re
 
 
 class Auth:
+    """Class that implements user authentication"""
+
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """_summary_
+        """method that validates and authenticates a url
 
         Args:
-            path (str): _description_
-            excluded_paths (List[str]): _description_
+            path (str): url path check
+            excluded_paths (List[str]): list of excluded url path
 
         Returns:
             bool: _description_
@@ -29,10 +31,10 @@ class Auth:
         return True
 
     def authorization_header(self, request=None) -> str:
-        """_summary_
+        """Method that implements a request header
 
         Args:
-            request (_type_, optional): _description_. Defaults to None.
+            request (_type_, optional): flask request object. Defaults to None.
 
         Returns:
             str: _description_
@@ -44,7 +46,7 @@ class Auth:
         return request.headers["Authorization"]
 
     def current_user(self, request=None) -> TypeVar("User"):
-        """_summary_
+        """Method that gets the current user
 
         Returns:
             _type_: _description_
