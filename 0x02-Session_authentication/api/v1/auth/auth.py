@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Auth class"""
-from flask import request
 from typing import List, TypeVar
 import re
 from os import getenv
+from flask import request
+
 
 class Auth:
     """Class that implements user authentication"""
@@ -52,7 +53,16 @@ class Auth:
             _type_: _description_
         """
         return None
+
     def session_cookie(self, request=None):
+        """_summary_
+
+        Args:
+            request (_type_, optional): _description_. Defaults to None.
+
+        Returns:
+            _type_: _description_
+        """
         if not request:
             return None
         SESSION_NAME = getenv("SESSION_NAME")
