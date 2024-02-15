@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Auth class"""
+"""SessionAuth class"""
 from uuid import uuid4
 from api.v1.auth.auth import Auth
 
@@ -10,6 +10,7 @@ class SessionAuth(Auth):
     Args:
         Auth (_type_): _description_
     """
+
     user_id_by_session_id = {}
 
     def create_session(self, user_id: str = None) -> str:
@@ -21,7 +22,7 @@ class SessionAuth(Auth):
         Returns:
             str: _description_
         """
-        if not(user_id and isinstance(user_id, str)):
+        if not (user_id and isinstance(user_id, str)):
             return None
         session_id = uuid4()
         self.user_id_by_session_id[session_id] = user_id
@@ -36,4 +37,4 @@ class SessionAuth(Auth):
         Returns:
             str: _description_
         """
-        return self.user_id_by_session_id.get(session_id,None )
+        return self.user_id_by_session_id.get(session_id, None)

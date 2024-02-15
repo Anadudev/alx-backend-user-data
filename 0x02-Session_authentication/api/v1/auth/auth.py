@@ -21,7 +21,7 @@ class Auth:
         """
 
         pattern = r"/api/v1/status(/?)"
-        if not(path and excluded_paths):
+        if not (path and excluded_paths):
             return True
         if path in excluded_paths:
             return False
