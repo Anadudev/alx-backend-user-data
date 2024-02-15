@@ -40,7 +40,8 @@ class User(Base):
 
     def display_name(self) -> str:
         """Display User name based on email/first_name/last_name"""
-        if self.email is None and self.first_name is None and self.last_name is None:
+        if self.email is None and\
+                self.first_name is None and self.last_name is None:
             return ""
         if self.first_name is None and self.last_name is None:
             return "{}".format(self.email)
