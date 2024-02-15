@@ -38,10 +38,7 @@ def handle_request():
     ]
     if not auth.require_auth(request.path, excluded):
         return
-    if (
-        auth.authorization_header(request) is None
-        and auth.session_cookie(request) is None
-    ):
+    if not (auth.authorization_header(request) or auth.session_cookie(request)):
         abort(401)
     if auth.current_user(request) is None:
         abort(403)
