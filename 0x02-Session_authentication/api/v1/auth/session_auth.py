@@ -2,7 +2,7 @@
 """SessionAuth class"""
 from uuid import uuid4
 from api.v1.auth.auth import Auth
-
+from models.user import User
 
 class SessionAuth(Auth):
     """_summary_
@@ -38,3 +38,11 @@ class SessionAuth(Auth):
             str: _description_
         """
         return self.user_id_by_session_id.get(session_id, None)
+    def current_user(self, request=None):
+        """Gets the curent user based on session ID"""
+        cookie =  self.session_cookie(request)
+        if cookie:
+            id = self.user_id_for_session_id(cookie)
+            if id:
+                return User.get(id)
+        return None
