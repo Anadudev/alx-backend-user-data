@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """_summary_
 """
-from flask import jsonify, request
+from os import getenv
+from flask import jsonify, request, abort
 from api.v1.views import app_views
 from models.user import User
-from os import getenv
 
 
 @app_views.route("/auth_session/login", methods=["POST"], strict_slashes=False)
-def status() -> str:
+def session_authentication() -> str:
     """GET /api/v1/status
     Return:
         - the status of the API
@@ -32,4 +32,19 @@ def status() -> str:
             data = jsonify(user.to_json())
             data.set_cookie(SESSION_NAME, user_id)
             return data
-        return jsonify({"error": "wrong password"}), 401
+    return jsonify({"error": "wrong password"}), 401
+
+
+@app_views.route(
+    "/api/v1/auth_session/logout", methods=["DELETE"], strict_slashes=False
+)
+def session_logout() -> str:
+    """GET /api/v1/status
+    Return:
+        - the status of the API
+    """
+    from api.v1.app import auth
+
+    if auth.destroy_session(request) is False:
+        abort(404)
+    return jsonify({}), 200
