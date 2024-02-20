@@ -6,6 +6,9 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
+from sqlalchemy.exc import InvalidRequestError
+from sqlalchemy.orm.exc import NoResultFound
+from typing import Dict
 
 from user import Base, User
 
@@ -39,3 +42,12 @@ class DB:
         self._session.add(new_user)
         self._session.commit()
         return new_user
+
+    def find_user_by(self, **kwargs: Dict) -> User:
+        try:
+            my_user = self._session.query(User).filter_by(**kwargs).first()
+        except InvalidRequestError:
+            riase InvalidRequestError()
+        except NoResultFound:
+            raise NoResultFound()
+        return my_user
