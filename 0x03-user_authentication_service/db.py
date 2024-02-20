@@ -44,10 +44,9 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs: Dict) -> User:
-        try:
-            my_user = self._session.query(User).filter_by(**kwargs).first()
-        except InvalidRequestError:
-            raise InvalidRequestError()
-        except NoResultFound:
-            raise NoResultFound()
+        if not kwargs:
+            raise InvalidRequestError
+        my_user = self._session.query(User).filter_by(**kwargs).first()
+        if not my_user:
+            raise NoResultFound
         return my_user
