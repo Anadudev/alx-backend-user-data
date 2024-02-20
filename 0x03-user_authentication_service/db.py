@@ -31,4 +31,4 @@ class DB:
         return self.__session
 
     def add_user(self, email, hashed_password):
-        return User
+        return User(email=email, hashed_password=hashed_password)
