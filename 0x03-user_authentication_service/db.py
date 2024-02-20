@@ -44,6 +44,7 @@ class DB:
         return new_user
 
     def find_user_by(self, **kwargs: Dict) -> User:
+        """ method that gets a user from the databse """
         if not kwargs:
             raise InvalidRequestError
         my_user = self._session.query(User).filter_by(**kwargs).first()
