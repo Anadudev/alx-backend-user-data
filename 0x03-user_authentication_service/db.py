@@ -32,4 +32,5 @@ class DB:
 
     def add_user(self, email, hashed_password):
         """Method that should add user to the db"""
-        return User(email=email, hashed_password=hashed_password)
+        new_user = User(email=email, hashed_password=hashed_password)
+        return new_user
