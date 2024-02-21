@@ -49,3 +49,11 @@ class DB:
         if not my_user:
             raise NoResultFound
         return my_user
+
+    def update_user(self, user_id: int, **kwargs: Dict) -> None:
+        user = self.find_user_by(id=user_id)
+        for key, value in kwargs.items():
+            if not hasattr(User, key):
+                raise ValueError(f"Invalid attribute: {key}")
+            setattr(user, key, value)
+        self._session.commit()
