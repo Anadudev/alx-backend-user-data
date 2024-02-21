@@ -12,6 +12,11 @@ def _hash_password(password: str) -> bytes:
     return bcrypt.hashpw(password.encode(), bcrypt.gensalt())
 
 
+def _generate_uuid() -> str:
+    """method that return a string representation of a new UUID"""
+    return str(uuid4())
+
+
 class Auth:
     """Auth class to interact with the authentication database.
     """
@@ -36,8 +41,3 @@ class Auth:
             return bcrypt.checkpw(password.encode(), user.hash_password)
         except NoResultFound:
             return False
-
-
-def _generate_uuid() -> str:
-    """method that return a string representation of a new UUID"""
-    return str(uuid4())
