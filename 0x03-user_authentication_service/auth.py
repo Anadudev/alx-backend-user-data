@@ -21,4 +21,5 @@ class Auth:
         if session.query(query.exists()).scalar():
             raise ValueError(f"User {email} already exists")
         else:
-            _hash_password(password)
+            hash_password = _hash_password(password)
+            self._db(email, hash_password)
