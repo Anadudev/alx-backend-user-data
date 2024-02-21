@@ -45,7 +45,6 @@ class DB:
 
     def find_user_by(self, **kwargs: Dict) -> User:
         """ method that gets a user from the databse """
-        
         my_user = self._session.query(User).filter_by(**kwargs).first()
         if not my_user:
             raise NoResultFound
