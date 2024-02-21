@@ -45,9 +45,15 @@ class DB:
 
     def find_user_by(self, **kwargs: Dict) -> User:
         """ method that gets a user from the databse """
-        if not kwargs:
+        """if not kwargs:
             raise InvalidRequestError
         my_user = self._session.query(User).filter_by(**kwargs).first()
+        if not my_user:
+            raise NoResultFound"""
+        try:
+            my_user =  self._session.query(User).filter_by(**kwargs).first()
+        except InvalidRequestError:
+            raise InvalidRequestError
         if not my_user:
             raise NoResultFound
         return my_user
