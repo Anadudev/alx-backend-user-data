@@ -30,12 +30,8 @@ class Auth:
 
     def valid_login(self, email: str, password: str) -> bool:
         """Method that validate suser login"""
-        """try:
+        try:
             user = self._db.find_user_by(email=email)
             return bcrypt.checkpw(password.encode(), user.hash_password)
         except NoResultFound:
-            return False"""
-        user = self._db.find_user_by(email=email)
-        if user:
-            return bcrypt.checkpw(password.encode(), user.hash_password)
-        return False
+            return False
