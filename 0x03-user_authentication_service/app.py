@@ -7,22 +7,24 @@ from auth import Auth
 app = Flask(__name__)
 AUTH = Auth()
 
+
 @app.route("/", methods=["GET"])
 def home():
     """application home route"""
     return jsonify({"message": "Bienvenue"})
 
+
 @app.route("/users", methods=["POST"])
 def register_users():
     """method that handles user registration"""
     data = request.form
-    email = data.("email")
-    password = data."(password")
+    email = data.get("email")
+    password = data.get("password")
     try:
         AUTH.register_user(email, password)
-        return jsonify({"email": "", "message": "user created"})
+        return jsonify({"email": f"{email}", "message": "user created"})
     except Exception:
-        return jsonify({"message": "email already registered"})
+        return jsonify({"message": "email already registered"}), 400
 
 
 if __name__ == "__main__":
