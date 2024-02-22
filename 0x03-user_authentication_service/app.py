@@ -54,7 +54,7 @@ def logout():
 
 
 @app.route("/profile", methods=["GET"])
-def home():
+def profile():
     """application home route"""
     session_id = request.cookies.get("session_id")
     try:
