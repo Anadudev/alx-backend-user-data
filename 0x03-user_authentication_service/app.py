@@ -33,12 +33,12 @@ def login():
     data = request.form
     email = data.get("email")
     password = data.get("password")
-    if AUTH.valid_login(email, password):
-        session_id = AUTH.create_session(email)
-        req = jsonify({"email": f"{email}", "message": "logged in"})
-        req.set_cookie("session_id", session_id)
-        return req
-    abort(401)
+    if not AUTH.valid_login(email, password):
+        abort(401)
+    session_id = AUTH.create_session(email)
+    req = jsonify({"email": f"{email}", "message": "logged in"})
+    req.set_cookie("session_id", session_id)
+    return req
 
 
 if __name__ == "__main__":
