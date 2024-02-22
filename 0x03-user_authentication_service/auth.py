@@ -61,4 +61,9 @@ class Auth:
 
     def destroy_session(self, user_id: int) -> None:
         """mwthod that desgroys a user session"""
+        try:
+            user = _db.find_user_by(id=user_id)
+            self._db.update_user(user.id, session_id=None)
+        except NoResultFound:
+            return None
         return None
