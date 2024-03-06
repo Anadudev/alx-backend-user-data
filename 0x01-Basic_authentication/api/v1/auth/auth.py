@@ -24,9 +24,13 @@ class Auth:
             return True
         if path in excluded_paths:
             return False
-        if re.match(pattern, path):
-            for paths in excluded_paths:
-                if re.match(pattern, paths):
+        for excluded_path in excluded_paths:
+            if excluded_path.startswith(path):
+                return False
+            elif path.startswith(excluded_path):
+                return False
+            elif excluded_path[-1] == "*":
+                if path.startswith(excluded_path[:-1]):
                     return False
         return True
 
